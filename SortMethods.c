@@ -1,4 +1,5 @@
 #include "SortMethods.h"
+#include <stdio.h>
 
 void resetHeap(int *vector, int cur_index, int vec_size, int (*compare)(int, int)){
 	int aux = 0, left_son = 0, right_son = 0, father_index = 0;
@@ -41,5 +42,31 @@ void heapsort(int *vector, int vec_size, int (*compare)(int, int)){
 		vector[1] = vector[i];
 		vector[i] = aux;
 		resetHeap(vector, 1, i-1, compare);
+	}
+}
+
+int partition(int *vector, int vec_begin, int vec_end, int (*compare)(int, int)){
+	int pivot = vec_end, i = vec_begin - 1, j, aux;
+
+	for(j = vec_begin; j < vec_end; j++){
+		if(compare(vector[j], vector[pivot])){
+			i += 1;
+			aux = vector[i];
+			vector[i] = vector[j];
+			vector[j] = aux;
+		}
+	}
+	aux = vector[i + 1];
+	vector[i + 1] = vector[j];
+	vector[j] = aux;
+
+	return i + 1;
+}
+
+void quicksort(int *vector, int vec_begin, int vec_end, int (*compare)(int, int)){
+	if(vec_begin < vec_end){
+		int pivot = partition(vector, vec_begin, vec_end, compare);
+		quicksort(vector, vec_begin, pivot-1, compare);
+		quicksort(vector, pivot+1, vec_end, compare);
 	}
 }
