@@ -49,7 +49,7 @@ int partition(int *vector, int vec_begin, int vec_end, int (*compare)(int, int))
 	int pivot = vec_end, i = vec_begin - 1, j, aux;
 
 	for(j = vec_begin; j < vec_end; j++){
-		if(compare(vector[j], vector[pivot])){
+		if((*compare)(vector[j], vector[pivot])){
 			i += 1;
 			aux = vector[i];
 			vector[i] = vector[j];
